@@ -5,10 +5,10 @@ namespace BankCardService.Application.Interfaces;
 
 public interface IBankCardRepository
 {
-    Task<BankCard> CreateAsync(BankCardDTO bankCardDTO);
+    Task<BankCard> CreateAsync(BankCard bankCard);
     Task<BankCard?> GetByIdAsync (Guid id);
     Task<IEnumerable<BankCard>> GetAllAsync();
-    Task UpdateAsync(Guid id, BankCardDTO newBankCard);
+    Task UpdateAsync(Guid id, BankCard newBankCard);
     Task DeleteAsync(Guid id);
 
 }
