@@ -17,8 +17,16 @@ public class BankCardDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-
-
+        modelBuilder.Entity<BankCard>(b =>
+        {
+            b.OwnsOne(x => x.CardNumber, cn =>
+            {
+                cn.Property(p => p.Value)
+                    .HasColumnName("CardNumber")
+                    .IsRequired();
+            });
+        });
     }
+
 
 }

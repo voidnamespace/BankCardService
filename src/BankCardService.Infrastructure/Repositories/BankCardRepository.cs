@@ -23,12 +23,7 @@ public class BankCardRepository : IBankCardRepository
 
     public async Task<BankCard?> GetByIdAsync (Guid id)
     {
-        var allBankCard = await _context.BankCards.ToListAsync();
-        
-        var bankCard = allBankCard.FirstOrDefault(x => x.Id == id);
-
-        return bankCard;
-
+        return await _context.BankCards.FindAsync(id);
     }
 
     public async Task<IEnumerable<BankCard>> GetAllAsync()
@@ -42,9 +37,17 @@ public class BankCardRepository : IBankCardRepository
         var oldCard = await _context.BankCards.FindAsync(id);
         if (oldCard == null)
         {
-            throw new ArgumentNullException("Old bank card not found");
+            throw new KeyNotFoundException("Bank card not found");
         }
-        oldCard = newBankCard;
+        if (oldCard.CardHolder != newBankCard.CardHolder)
+        {
+            oldCard.ChangeCardHolder(newBankCard.CardHolder);
+        }
+        if (oldCard.CardNumber != newBankCard.CardNumber)
+        {
+            oldCard.ChangeCardNumber(newBankCard.CardNumber);
+        }
+
         await _context.SaveChangesAsync();
     }
 
@@ -53,7 +56,7 @@ public class BankCardRepository : IBankCardRepository
         var delBankCard = await _context.BankCards.FindAsync(id);
         if (delBankCard == null)
         {
-            throw new ArgumentNullException("Bank card does not exist");
+            throw new KeyNotFoundException("Bank card does not exist");
         }
         _context.BankCards.Remove(delBankCard);
         await _context.SaveChangesAsync();

@@ -6,6 +6,7 @@ public class CardNumberVO
 {
     public string _bankCard { get; private set; } = string.Empty;
 
+    private CardNumberVO() { }
     public string Value => _bankCard;
 
     public CardNumberVO(string bankCard)
