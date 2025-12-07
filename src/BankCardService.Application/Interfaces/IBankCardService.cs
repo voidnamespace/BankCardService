@@ -1,7 +1,5 @@
 ﻿using BankCardService.Application.DTOs;
-
 namespace BankCardService.Application.Interfaces;
-
 public interface IBankCardService
 {
     Task<BankCardDTO> CreateAsync(CreateBankCardDTO createBankCardDTO);

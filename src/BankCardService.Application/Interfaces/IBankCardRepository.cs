@@ -1,8 +1,6 @@
 ﻿using BankCardService.Application.DTOs;
 using BankCardService.Domain.Entities;
-
 namespace BankCardService.Application.Interfaces;
-
 public interface IBankCardRepository
 {
     Task<BankCard> CreateAsync(BankCard bankCard);
@@ -10,5 +8,4 @@ public interface IBankCardRepository
     Task<IEnumerable<BankCard>> GetAllAsync();
     Task UpdateAsync(Guid id, BankCard newBankCard);
     Task DeleteAsync(Guid id);
-
 }

@@ -1,8 +1,5 @@
 ﻿using BankCardService.Domain.ValueObjects;
-
 namespace BankCardService.Domain.Entities;
-
-
 public class BankCard
 {
     public Guid Id { get; set; }
