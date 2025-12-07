@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using BankCardService.Domain.Entities;
+﻿using BankCardService.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 namespace BankCardService.Infrastructure.Data;
 
 public class BankCardDbContext : DbContext
@@ -17,15 +17,30 @@ public class BankCardDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<BankCard>(b =>
+
+        modelBuilder.Entity<BankCard>(entity =>
         {
-            b.OwnsOne(x => x.CardNumber, cn =>
-            {
-                cn.Property(p => p.Value)
-                    .HasColumnName("CardNumber")
-                    .IsRequired();
-            });
+            entity.HasKey(x => x.Id);
+
+            entity.Property(x => x.CardNumber)
+            .IsRequired();
+
+            entity.Property(x => x.CardHolder)
+            .IsRequired();
+
+            entity.Property(x => x.Balance)
+            .HasDefaultValue(0)
+            .IsRequired();
+            
+            entity.Property(x => x.IsActive)
+            .HasDefaultValue(true)
+            .IsRequired();
+            
+
         });
+
+
+
     }
 
 

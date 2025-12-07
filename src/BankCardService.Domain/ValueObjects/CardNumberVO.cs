@@ -1,12 +1,10 @@
-﻿using BankCardService.Domain.Entities;
-
-namespace BankCardService.Domain.ValueObjects;
-
+﻿namespace BankCardService.Domain.ValueObjects;
 public class CardNumberVO
 {
-    public string _bankCard { get; private set; } = string.Empty;
+    private CardNumberVO() { } 
 
-    private CardNumberVO() { }
+    private string _bankCard = string.Empty;
+
     public string Value => _bankCard;
 
     public CardNumberVO(string bankCard)
@@ -16,6 +14,7 @@ public class CardNumberVO
 
         if (bankCard.Length != 16 || !bankCard.All(char.IsDigit))
             throw new ArgumentException("Card number must be 16 digits");
+
         if (!IsValidLuhn(bankCard))
             throw new ArgumentException("Invalid card number");
 
@@ -24,20 +23,20 @@ public class CardNumberVO
 
     private bool IsValidLuhn(string number)
     {
-        int sum = 0;            
-        bool alternate = false;  
+        int sum = 0;
+        bool alternate = false;
 
-        for (int i = number.Length - 1; i >= 0; i--)  
+        for (int i = number.Length - 1; i >= 0; i--)
         {
-            int n = int.Parse(number[i].ToString());  
-            if (alternate)                           
+            int n = int.Parse(number[i].ToString());
+            if (alternate)
             {
-                n *= 2;                             
-                if (n > 9) n -= 9;                   
+                n *= 2;
+                if (n > 9) n -= 9;
             }
-            sum += n;                                 
-            alternate = !alternate;                 
+            sum += n;
+            alternate = !alternate;
         }
-        return sum % 10 == 0;                         
+        return sum % 10 == 0;
     }
 }

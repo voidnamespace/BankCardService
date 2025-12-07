@@ -11,8 +11,8 @@ public class BankCard
     public DateTime ExpirationDate { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    public decimal Balance { get; set; }
-    public bool IsActive { get; set; }
+    public decimal Balance { get; set; } = 0;
+    public bool IsActive { get; set; } = true;
 
     private BankCard() { }
 
