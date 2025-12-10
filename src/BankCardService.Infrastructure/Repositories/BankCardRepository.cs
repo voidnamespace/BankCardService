@@ -14,51 +14,20 @@ public class BankCardRepository : IBankCardRepository
         _context = context;
     }
 
-    public async Task<BankCard> CreateAsync(BankCard bankCard)
-    {
-        await _context.BankCards.AddAsync(bankCard);
-        await _context.SaveChangesAsync();
-        return bankCard;
-    }
-
-    public async Task<BankCard?> GetByIdAsync (Guid id)
-    {
-        return await _context.BankCards.FindAsync(id);
-    }
+    public async Task<BankCard?> GetByIdAsync(Guid id)
+    => await _context.BankCards.FindAsync(id);
 
     public async Task<IEnumerable<BankCard>> GetAllAsync()
-    {
-        var all = await _context.BankCards.ToListAsync();
-        return all;
-    }
+        => await _context.BankCards.ToListAsync();
 
-    public async Task UpdateAsync(Guid id, BankCard newBankCard)
-    {
-        var oldCard = await _context.BankCards.FindAsync(id);
-        if (oldCard == null)
-        {
-            throw new KeyNotFoundException("Bank card not found");
-        }
-        if (oldCard.CardHolder != newBankCard.CardHolder)
-        {
-            oldCard.ChangeCardHolder(newBankCard.CardHolder);
-        }
-        if (oldCard.CardNumber != newBankCard.CardNumber)
-        {
-            oldCard.ChangeCardNumber(newBankCard.CardNumber);
-        }
+    public async Task AddAsync(BankCard card)
+        => await _context.BankCards.AddAsync(card);
 
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task DeleteAsync(Guid id)
+    public Task RemoveAsync(BankCard card)
     {
-        var delBankCard = await _context.BankCards.FindAsync(id);
-        if (delBankCard == null)
-        {
-            throw new KeyNotFoundException("Bank card does not exist");
-        }
-        _context.BankCards.Remove(delBankCard);
-        await _context.SaveChangesAsync();
+        _context.BankCards.Remove(card);
+        return Task.CompletedTask;
     }
+    public async Task SaveAsync()
+        => await _context.SaveChangesAsync();
 }
