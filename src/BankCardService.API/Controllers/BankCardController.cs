@@ -19,24 +19,26 @@ public class BankCardController : ControllerBase
 
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
     public async Task<IActionResult> Create([FromBody] CreateBankCardDTO createBankCardDTO)
     {
         var response = await _bankCardService.CreateAsync(createBankCardDTO);
         return CreatedAtAction(nameof(GetById), new { id = response.Id }, response);
     }
 
-    [HttpGet("user")]
+    [HttpGet("{cardId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid cardId)
     {
         var response = await _bankCardService.GetByIdAsync(cardId);
         return Ok(response);
     }
 
-    [HttpGet("users")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetAll()
     {
         var response = await _bankCardService.GetAllAsync();
@@ -44,6 +46,9 @@ public class BankCardController : ControllerBase
     }
 
     [HttpPut("{cardId}/deposit")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
 
     public async Task<IActionResult> Deposit(Guid cardId, decimal amount)
     {
@@ -52,6 +57,9 @@ public class BankCardController : ControllerBase
     }
 
     [HttpPut("{cardId}/withdrawal")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Withdrawal(Guid cardId, decimal amount)
     {
         await _bankCardService.WithdrawalAsync(cardId, amount);
@@ -59,6 +67,10 @@ public class BankCardController : ControllerBase
     }
 
     [HttpPut("{cardId}/activate")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
     public async Task<IActionResult> Activate(Guid cardId)
     {
         await _bankCardService.ActivateAsync(cardId);
@@ -66,6 +78,10 @@ public class BankCardController : ControllerBase
     }
 
     [HttpPut("{cardId}/deactivate")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
     public async Task<IActionResult> Deactivate(Guid cardId)
     {
         await _bankCardService.DeactivateAsync(cardId);
@@ -73,6 +89,10 @@ public class BankCardController : ControllerBase
     }
 
     [HttpPut("{cardId}/changeHolder")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
     public async Task<IActionResult> ChangeCardHolder(Guid cardId, string newHolder)
     {
         await _bankCardService.ChangeCardHolderAsync(cardId, newHolder);
@@ -80,6 +100,10 @@ public class BankCardController : ControllerBase
     }
 
     [HttpPut("{cardId}/changeNumber")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
     public async Task<IActionResult> ChangeCardNumber( Guid cardId, string newNumber)
     {
         await _bankCardService.ChangeCardNumberAsync(cardId, newNumber);
