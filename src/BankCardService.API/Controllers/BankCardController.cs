@@ -25,7 +25,7 @@ public class BankCardController : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateBankCardDTO createBankCardDTO)
     {
         var response = await _bankCardService.CreateAsync(createBankCardDTO);
-        return CreatedAtAction(nameof(GetById), new { id = response.Id }, response);
+        return CreatedAtAction(nameof(GetById), new { cardId = response.Id }, response);
     }
 
     [HttpGet("{cardId}")]
