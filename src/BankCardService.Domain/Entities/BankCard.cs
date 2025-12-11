@@ -3,8 +3,8 @@ namespace BankCardService.Domain.Entities;
 public class BankCard
 {
     public Guid Id { get; set; }
-    public required CardNumberVO CardNumber { get; set; }
-    public required string CardHolder { get; set; }
+    public CardNumberVO CardNumber { get; set; } = null!;
+    public string CardHolder { get; set; } = null!;
     public DateTime ExpirationDate { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
