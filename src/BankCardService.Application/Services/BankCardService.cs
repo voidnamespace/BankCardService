@@ -4,7 +4,7 @@ using BankCardService.Domain.Entities;
 using BankCardService.Domain.ValueObjects;
 
 
-namespace BankCardService.Application.Service;
+namespace BankCardService.Application.Services;
 
 public class BankCardService : IBankCardService
 {
