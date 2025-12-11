@@ -113,7 +113,21 @@ public class BankCardService : IBankCardService
             Balance = card.Balance,
             IsActive = card.IsActive
         };
-            
+    }
+
+    public async Task<IEnumerable<BankCardDTO>> GetAllAsync()
+    {
+        var cards = await _bankCardRepository.GetAllAsync();
+        
+        return cards.Select(card => new BankCardDTO
+        {
+            Id = card.Id,
+            CardNumber = card.CardNumber.Value,
+            CardHolder = card.CardHolder,
+            ExpirationDate = card.ExpirationDate,
+            Balance = card.Balance,
+            IsActive = card.IsActive
+        });
     }
 }
 
