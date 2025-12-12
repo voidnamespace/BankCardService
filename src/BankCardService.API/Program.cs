@@ -1,5 +1,5 @@
 using BankCardService.Application.Interfaces;
-using BankCardService.Application.Services;
+using BankCardService.API.GlobalExceptionMiddleware;
 using BankCardService.Infrastructure.Data;
 using BankCardService.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Controllers
 builder.Services.AddControllers();
+
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -25,6 +26,7 @@ builder.Services.AddScoped<IBankCardRepository, BankCardRepository>();
 builder.Services.AddScoped<IBankCardService, BankCardService.Application.Services.BankCardService>();
 
 var app = builder.Build();
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 // Swagger
 if (app.Environment.IsDevelopment())
